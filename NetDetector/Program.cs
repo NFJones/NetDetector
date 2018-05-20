@@ -10,7 +10,7 @@ namespace NetDetector
         {
             try
             {
-                var parser = new SimpleCli.Parser(args, version: "0.0.1", maxWidth: 65);
+                var parser = new SimpleCli.Parser(args, version: "0.0.2", maxWidth: 65);
                 parser.Add("addr", "The IP or MAC address to detect.");
                 parser.Add("connect", 
                            'c', 
