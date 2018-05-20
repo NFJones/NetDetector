@@ -10,8 +10,8 @@ namespace NetDetector
     internal class Detector
     {
         public Detector(IPAddress address,
-                        string connectCmd,
-                        string disconnectCmd,
+                        string[] connectCmd,
+                        string[] disconnectCmd,
                         int pollRate,
                         int connectCount,
                         int disconnectCount)
@@ -45,9 +45,9 @@ namespace NetDetector
                         firstRun = false;
                         connected = true;
                         Log($"Detected");
-                        if (connectCmd != "")
+                        if (connectCmd.Length > 0)
                         {
-                            Log($"Running: {connectCmd}");
+                            Log($"Running: {ArgsToString(connectCmd)}");
                             RunProcess(connectCmd);
                         }
                     }
@@ -62,9 +62,9 @@ namespace NetDetector
                         firstRun = false;
                         connected = false;
                         Log($"Not detected");
-                        if (disconnectCmd != "")
+                        if (disconnectCmd.Length > 0)
                         {
-                            Log($"Running: {disconnectCmd}");
+                            Log($"Running: {ArgsToString(disconnectCmd)}");
                             RunProcess(disconnectCmd);
                         }
                     }
@@ -87,17 +87,16 @@ namespace NetDetector
             return buffer.ToString();
         }
 
-        private void RunProcess(string cmd)
+        private void RunProcess(string[] cmd)
         {
             try
             {
-                var split = cmd.Split(' ');
-                var programName = split[0];
+                var programName = cmd[0];
 
                 ArrayList args = new ArrayList();
 
-                for(var i = 1; i < split.Length; i++)
-                    args.Add(split[i]);
+                for(var i = 1; i < cmd.Length; i++)
+                    args.Add(cmd[i]);
 
                 var p = new Process();
                 p.StartInfo.UseShellExecute = false;
@@ -108,7 +107,7 @@ namespace NetDetector
             }
             catch (Exception e)
             {
-                Log($"Failed to run: {cmd} ({e.Message})");
+                Log($"Failed to run: {ArgsToString(cmd)} ({e.Message})");
             }
         }
 
@@ -129,8 +128,8 @@ namespace NetDetector
         }
 
         private IPAddress address { get; set; }
-        private string connectCmd { get; set; }
-        private string disconnectCmd { get; set; }
+        private string[] connectCmd { get; set; }
+        private string[] disconnectCmd { get; set; }
         private int pollRate { get; set; }
         private int connectCount { get; set; }
         private int disconnectCount { get; set; }

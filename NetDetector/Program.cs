@@ -10,18 +10,18 @@ namespace NetDetector
         {
             try
             {
-                var parser = new SimpleCli.Parser(args, version: "0.0.3", maxWidth: 65);
+                var parser = new SimpleCli.Parser(args, version: "0.0.4", maxWidth: 65);
                 parser.Add("addr", "The IP or MAC address to detect.");
                 parser.Add("connect", 
                            'c', 
-                           "The command to run when the MAC address is detected on the network.", 
+                           "The command (with args separated by commas) to run when the MAC address is detected on the network.", 
                            "",
-                           SimpleCli.Arg.Type.SINGLE);
+                           SimpleCli.Arg.Type.MULTIPLE);
                 parser.Add("disconnect", 
                            'd', 
-                           "The command to run when the MAC address is no longer detected on the network.", 
+                           "The command (with args separated by commas) to run when the MAC address is no longer detected on the network.", 
                            "",
-                           SimpleCli.Arg.Type.SINGLE);
+                           SimpleCli.Arg.Type.MULTIPLE);
                 parser.Add("rate", 
                            'r', 
                            "The poll rate in seconds.", 
@@ -44,8 +44,8 @@ namespace NetDetector
                            SimpleCli.Arg.Type.SINGLE);
                 parser.Parse();
 
-                var connect = parser["connect"].GetString();
-                var disconnect = parser["disconnect"].GetString();
+                var connect = parser["connect"].GetStringArray();
+                var disconnect = parser["disconnect"].GetStringArray();
                 var rate = parser["rate"].GetInt();
                 var connectCount = parser["connect-count"].GetInt();
                 var disconnectCount = parser["disconnect-count"].GetInt();

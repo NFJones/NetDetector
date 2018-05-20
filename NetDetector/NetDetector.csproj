@@ -8,9 +8,9 @@
     <PackageId>NetDetector</PackageId>
     <Title>NetDetector</Title>
     <Description>A daemon which checks for and responds to a given MAC or IP address on the network.</Description>
-    <Version>0.0.3</Version>
-    <AssemblyVersion>0.0.3</AssemblyVersion>
-    <FileVersion>0.0.3</FileVersion>
+    <Version>0.0.4</Version>
+    <AssemblyVersion>0.0.4</AssemblyVersion>
+    <FileVersion>0.0.4</FileVersion>
     <PackageLicenseUrl>https://github.com/NFJones/NetDetector/blob/master/COPYING</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/NFJones/NetDetector</PackageProjectUrl>
     <RepositoryUrl>https://github.com/NFJones/NetDetector</RepositoryUrl>

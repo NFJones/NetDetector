@@ -4,7 +4,7 @@ NetDetector is a daemon which checks for and responds to a given MAC or IP addre
 ### Help text
 ```bash
 > NetDetector  -h
-Usage: NetDetector [-h] [-v] [-c CONNECT] [-d DISCONNECT] [-r RATE]
+Usage: NetDetector [-h] [-v] [-c 'ITEM, ...'] [-d 'ITEM, ...'] [-r RATE]
                    [-C CONNECT-COUNT] [-D DISCONNECT-COUNT]
                    [-i INTERFACE] ADDR
 Positional arguments:
@@ -15,10 +15,12 @@ Optional arguments:
         Displays this help message and exits.
   -v, --version
         Displays the version.
-  -c CONNECT, --connect CONNECT
-        The command to run when the MAC address is detected on the network.
-  -d DISCONNECT, --disconnect DISCONNECT
-        The command to run when the MAC address is no longer detected on the network.
+  -c 'ITEM, ...', --connect 'ITEM, ...'
+        The command (with args separated by commas) to run when the MAC address is
+          detected on the network.
+  -d 'ITEM, ...', --disconnect 'ITEM, ...'
+        The command (with args separated by commas) to run when the MAC address is no
+          longer detected on the network.
   -r RATE, --rate RATE
         The poll rate in seconds.
         Default: 60
@@ -51,7 +53,7 @@ fi
 ```
 `NetDetector`
 ```bash
-> NetDetector fe80::9c11:e50:ad4f:f749 -i eth2 -r 1 -c "./test.sh connect" -d "./test.sh disconnect"
+> NetDetector fe80::9c11:e50:ad4f:f749 -i eth2 -r 1 -c "./test.sh,connect" -d "./test.sh,disconnect"
 (fe80::9c11:e50:ad4f:f749%3) - Watching
 (fe80::9c11:e50:ad4f:f749%3) - Not detected
 (fe80::9c11:e50:ad4f:f749%3) - Running: ./test.sh disconnect
