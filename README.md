@@ -16,10 +16,10 @@ Optional arguments:
   -v, --version
         Displays the version.
   -c 'ITEM, ...', --connect 'ITEM, ...'
-        The command (with args separated by commas) to run when the MAC address is
+        The command (with args separated by commas) to run when the address is
           detected on the network.
   -d 'ITEM, ...', --disconnect 'ITEM, ...'
-        The command (with args separated by commas) to run when the MAC address is no
+        The command (with args separated by commas) to run when the address is no
           longer detected on the network.
   -r RATE, --rate RATE
         The poll rate in seconds.

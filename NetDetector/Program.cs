@@ -14,12 +14,12 @@ namespace NetDetector
                 parser.Add("addr", "The IP or MAC address to detect.");
                 parser.Add("connect", 
                            'c', 
-                           "The command (with args separated by commas) to run when the MAC address is detected on the network.", 
+                           "The command (with args separated by commas) to run when the address is detected on the network.", 
                            "",
                            SimpleCli.Arg.Type.MULTIPLE);
                 parser.Add("disconnect", 
                            'd', 
-                           "The command (with args separated by commas) to run when the MAC address is no longer detected on the network.", 
+                           "The command (with args separated by commas) to run when the address is no longer detected on the network.", 
                            "",
                            SimpleCli.Arg.Type.MULTIPLE);
                 parser.Add("rate", 
