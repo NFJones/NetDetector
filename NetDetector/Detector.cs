@@ -33,47 +33,54 @@ namespace NetDetector
 
             while (running)
             {
-                var ping = new Ping();
-                var response = ping.Send(address);
-                if (response.Status == IPStatus.Success)
+                try
                 {
-                    curConnectCount++;
-                    curDisconnectCount = 0;
-
-                    if ((!connected || firstRun) && curConnectCount >= connectCount)
+                    var ping = new Ping();
+                    var response = ping.Send(address);
+                    if (response.Status == IPStatus.Success)
                     {
-                        firstRun = false;
-                        connected = true;
-                        Log($"Detected");
-                        if (connectCmd.Length > 0)
+                        curConnectCount++;
+                        curDisconnectCount = 0;
+
+                        if ((!connected || firstRun) && curConnectCount >= connectCount)
                         {
-                            Log($"Running: {ArgsToString(connectCmd)}");
-                            RunProcess(connectCmd);
+                            firstRun = false;
+                            connected = true;
+                            Log($"Detected");
+                            if (connectCmd.Length > 0)
+                            {
+                                Log($"Running: {ArgsToString(connectCmd)}");
+                                RunProcess(connectCmd);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        curDisconnectCount++;
+                        curConnectCount = 0;
+
+                        if ((connected || firstRun) && curDisconnectCount >= disconnectCount)
+                        {
+                            firstRun = false;
+                            connected = false;
+                            Log($"Not detected");
+                            if (disconnectCmd.Length > 0)
+                            {
+                                Log($"Running: {ArgsToString(disconnectCmd)}");
+                                RunProcess(disconnectCmd);
+                            }
                         }
                     }
                 }
-                else
+                catch (Exception e)
                 {
-                    curDisconnectCount++;
-                    curConnectCount = 0;
-
-                    if ((connected || firstRun) && curDisconnectCount >= disconnectCount)
-                    {
-                        firstRun = false;
-                        connected = false;
-                        Log($"Not detected");
-                        if (disconnectCmd.Length > 0)
-                        {
-                            Log($"Running: {ArgsToString(disconnectCmd)}");
-                            RunProcess(disconnectCmd);
-                        }
-                    }
+                    Log(e.Message);
                 }
 
                 System.Threading.Thread.Sleep(1000 * pollRate);
             }
         }
-        
+
         private static string ArgsToString(string[] args)
         {
             StringBuilder buffer = new StringBuilder();
@@ -95,7 +102,7 @@ namespace NetDetector
 
                 ArrayList args = new ArrayList();
 
-                for(var i = 1; i < cmd.Length; i++)
+                for (var i = 1; i < cmd.Length; i++)
                     args.Add(cmd[i]);
 
                 var p = new Process();
